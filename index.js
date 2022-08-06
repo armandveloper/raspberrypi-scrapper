@@ -1,6 +1,6 @@
-const { chromium } = require('playwright-chromium')
+import { chromium } from 'playwright'
 
-exports.handler = async function (event, context) {
+(async () => {
   const browser = await chromium.launch()
   const page = await browser.newPage()
   await page.goto('https://www.330ohms.com/collections/raspberry-pi-400/products/raspberry-pi-400-kit-oficial-en-espanol')
@@ -11,8 +11,7 @@ exports.handler = async function (event, context) {
   console.log({ stockCount, hasStock })
   await page.close()
   await browser.close()
-  if (!hasStock) return { statusCode: 200, body: 'No stock' }
+  if (!hasStock) return
   console.log('We have stock!')
-  return { statusCode: 200, body: 'We have stock!' }
   // TODO Send me a notification
-}
+})()
