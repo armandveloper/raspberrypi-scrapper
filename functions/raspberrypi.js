@@ -11,7 +11,8 @@ exports.handler = async function (event, context) {
   console.log({ stockCount, hasStock })
   await page.close()
   await browser.close()
-  if (!hasStock) return
+  if (!hasStock) return { statusCode: 200, body: 'No stock' }
   console.log('We have stock!')
+  return { statusCode: 200, body: 'We have stock!' }
   // TODO Send me a notification
 }
