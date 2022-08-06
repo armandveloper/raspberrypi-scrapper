@@ -1,6 +1,8 @@
+import cron from 'node-cron'
 import { chromium } from 'playwright'
 
-(async () => {
+async function checkRaspberryStock () {
+  console.log('running cron job')
   const browser = await chromium.launch()
   const page = await browser.newPage()
   await page.goto('https://www.330ohms.com/collections/raspberry-pi-400/products/raspberry-pi-400-kit-oficial-en-espanol')
@@ -14,4 +16,6 @@ import { chromium } from 'playwright'
   if (!hasStock) return
   console.log('We have stock!')
   // TODO Send me a notification
-})()
+}
+
+cron.schedule('0 12 * * *', checkRaspberryStock, { timezone: 'America/Mexico_City' })
