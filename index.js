@@ -35,4 +35,4 @@ async function checkRaspberryStock () {
   console.log('message sent:', message.sid)
 }
 
-cron.schedule('0 20 * * *', checkRaspberryStock, { timezone: 'America/Mexico_City' })
+cron.schedule('3 20 * * *', checkRaspberryStock, { timezone: 'America/Mexico_City' })
