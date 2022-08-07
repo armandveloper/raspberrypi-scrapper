@@ -14,14 +14,18 @@ const productUrl = 'https://www.330ohms.com/collections/raspberry-pi-400/product
 async function checkRaspberryStock () {
   console.log('running cron job')
   const browser = await chromium.launch()
-  const page = await browser.newPage(productUrl)
-  await page.goto()
+  const page = await browser.newPage()
+  await page.goto(productUrl)
   const productDetails = await page.locator('[aria-live="polite"]:has-text("Stock")')
   const stock = await productDetails.locator('b').innerText()
   const stockCount = Number(stock)
   const hasStock = stockCount > 0
   await page.close()
   await browser.close()
+  if (!hasStock) {
+    console.log('out of stock')
+    return
+  }
   const message = await client.messages
     .create({
       body: `Stock: ${stockCount}. ${hasStock ? 'Available' : 'Not available'}. ${productUrl}`,
