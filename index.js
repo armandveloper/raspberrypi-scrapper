@@ -22,10 +22,6 @@ async function checkRaspberryStock () {
   const hasStock = stockCount > 0
   await page.close()
   await browser.close()
-  if (!hasStock) {
-    console.log('out of stock')
-    return
-  }
   const message = await client.messages
     .create({
       body: `Stock: ${stockCount}. ${hasStock ? 'Available' : 'Not available'}. ${productUrl}`,
@@ -35,4 +31,4 @@ async function checkRaspberryStock () {
   console.log('message sent:', message.sid)
 }
 
-cron.schedule('3 20 * * *', checkRaspberryStock, { timezone: 'America/Mexico_City' })
+cron.schedule('10 20 * * *', checkRaspberryStock, { timezone: 'America/Mexico_City' })
